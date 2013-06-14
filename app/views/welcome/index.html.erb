@@ -1,0 +1,171 @@
+<script type="text/x-handlebars">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="navbar">
+        <div class="navbar-inner"><a class="brand">lihui@qq.cdom</a>
+          <ul class="nav">
+            <li class="divider-vertical">{{#linkTo Gettingmails}}收信箱{{/linkTo}}</li>
+            <li class="divider-vertical">{{#linkTo Havemails}} 已发邮 {{/linkTo}}</li>
+            <li class="divider-vertical"><a>草稿箱</a></li>
+          </ul>
+          <div class="btn-group pull-right">
+            {{#linkTo Newmail class="btn btn-small"}}
+            <i class="icon-pencil"></i>发送
+            {{/linkTo}}<a class="btn btn-small"><i class="icon-download-alt"></i><span>存档</span></a><a class="btn btn-small"><i class="icon-trash"></i><span>删除</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+  {{outlet}}
+  </div>
+</script>
+<script id="Newmail" type="text/x-handlebars">
+  <div class="well well-small">
+
+    {{#formFor model }}
+    {{input title }}
+    {{input details}}
+    {{#input createdate}}
+    {{labelField createdate}}
+    <div class="controls">{{view Email.DateField dateBinding="createdate" }}</div>
+    {{errorField createdate}}
+    {{/input}}
+    {{input count}}
+    {{/formFor}}
+    <button {{action 'create'}} class="btn">创建</button>
+  </div>
+</script>
+
+<!--已发邮件列表-->
+<script id="Havemails" type="text/x-handlebars">
+  <div class="row-fluid">
+    <div class="span4 well well-small emailbody">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <td> 已发邮件</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a class="btn btn-small"><i class="icon-refresh"></i></a></td>
+          <td>
+            <div class="input-append">
+              <input type="text" placeholder="搜索" class="span11 input-medium"/><a class="add-on btn"><i class="icon-search"></i></a>
+            </div>
+          </td>
+        </tr>
+        </tbody>{{#each model}}
+        <tr>
+          <td><input type="checkbox"/></td>
+          <td>
+            {{#linkTo 'Havemail' this }}<h5> {{title}}</h5>{{/linkTo}}
+            <small> 时间： {{date date}} </small>
+            <small> {{details}} </small>
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+    <div class="span8 well well-small emailbody">{{outlet}}</div>
+  </div>
+</script>
+<!--收件箱详情-->
+<script id="Havemail" type="text/x-handlebars">
+  <div class="accordion-group">
+    <div class="accordion-heading"><a data-toggle="collapse" href="#collapseTwo" class="accordion-toggle">
+      <h5>{{title}}<small class="pull-right muted">发送#至我 {{date date}}</small></h5></a></div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">{{details}}</div>
+    </div>
+  </div>
+  <div class="btn-group"><a data-toggle="modal" href="#transmitEmail" class="btn btn-large"><i class="icon-arrow-left"></i><span>转发</span></a><a class="btn btn-large"><i class="icon-share-alt"></i><span>回复</span></a></div>
+  <div id="transmitEmail" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+      <h4>发送邮件</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{view Ember.TextField valueBinding='title'}}</p>
+      <p>{{view Ember.TextArea valueBinding='details'}}</p>
+    </div>
+    <div class="modal-footer">
+      <button data-dismiss="modal" aria-hidden="true" class="btn">取消</button>
+    </div>
+  </div>
+</script>
+
+
+<!--收件箱列表-->
+<script  type="text/x-handlebars" data-template-name="Gettingmails">
+  <div class="row-fluid">
+    <div class="span4 well well-small emailbody">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <td> 收信箱</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a class="btn btn-small"><i class="icon-refresh"></i></a></td>
+          <td>
+            <div class="input-append">{{view Ember.TextField valueBinding="search" class="span11 input-medium" type="text" placeholder="搜索"}}<a class="add-on btn"><i class="icon-search"></i></a></div>
+          </td>
+        </tr>
+        </tbody>{{#each searchedContent}}
+        <tr>
+          <td><input type="checkbox"/></td>
+          <td>
+            {{#linkTo 'Gettingmail' this }}<h5>{{count}} {{title}}</h5>{{/linkTo}}
+            <small> 时间： {{createdate}} </small>
+            <small> {{details}} </small>
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+    <div class="span8 well well-small emailbody">{{outlet}}</div>
+  </div>
+</script>
+<!--收件箱详情-->
+<script  type="text/x-handlebars" data-template-name="Gettingmail">
+
+  <div class="accordion-group">
+    <div class="accordion-heading"><a data-toggle="collapse" href="#collapseTwo" class="accordion-toggle">
+      <h5>{{title}}<small class="pull-right muted">发送至我 {{createdate}}</small></h5></a></div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">{{details}}</div>
+    </div>
+  </div>
+  <div class="btn-group"><a data-toggle="modal" href="#transmitEmail" class="btn btn-large"><i class="icon-arrow-left"></i><span>转发</span></a><a class="btn btn-large"><i class="icon-share-alt"></i><span>回复</span></a></div>
+  <div id="transmitEmail" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+      <h4>发送邮件</h4>
+    </div>
+    <div class="modal-body">
+
+      {{#formFor context}}
+      {{input title}}
+      {{input details}}
+      {{#input createdate}}
+      {{labelField createdate}}
+      <div class="controls">{{view Email.DateField dateBinding="createdate"}}</div>
+      {{errorField createdate}}
+      {{/input}}
+
+      {{input count}}
+      {{/formFor}}
+
+    </div>
+    <div class="modal-footer">
+      <button {{action 'edit'}} class="btn">修改</button>
+      <button {{action 'cancel'}} class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+    </div>
+  </div>
+
+</script>
+

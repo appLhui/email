@@ -1,0 +1,29 @@
+<h1>Listing gettingmails</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Details</th>
+    <th>Createdate</th>
+    <th>Count</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @gettingmails.each do |gettingmail| %>
+  <tr>
+    <td><%= gettingmail.title %></td>
+    <td><%= gettingmail.details %></td>
+    <td><%= gettingmail.createdate %></td>
+    <td><%= gettingmail.count %></td>
+    <td><%= link_to 'Show', gettingmail %></td>
+    <td><%= link_to 'Edit', edit_gettingmail_path(gettingmail) %></td>
+    <td><%= link_to 'Destroy', gettingmail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Gettingmail', new_gettingmail_path %>

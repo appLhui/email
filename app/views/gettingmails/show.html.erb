@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @gettingmail.title %>
+</p>
+
+<p>
+  <b>Details:</b>
+  <%= @gettingmail.details %>
+</p>
+
+<p>
+  <b>Createdate:</b>
+  <%= @gettingmail.createdate %>
+</p>
+
+<p>
+  <b>Count:</b>
+  <%= @gettingmail.count %>
+</p>
+
+
+<%= link_to 'Edit', edit_gettingmail_path(@gettingmail) %> |
+<%= link_to 'Back', gettingmails_path %>

@@ -1,0 +1,33 @@
+<%= form_for(@gettingmail) do |f| %>
+  <% if @gettingmail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gettingmail.errors.count, "error") %> prohibited this gettingmail from being saved:</h2>
+
+      <ul>
+      <% @gettingmail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :details %><br />
+    <%= f.text_field :details %>
+  </div>
+  <div class="field">
+    <%= f.label :createdate %><br />
+    <%= f.date_select :createdate %>
+  </div>
+  <div class="field">
+    <%= f.label :count %><br />
+    <%= f.number_field :count %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

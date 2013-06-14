@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  details: MyString
+  createdate: 2013-06-07
+  count: 1
+
+two:
+  title: MyString
+  details: MyString
+  createdate: 2013-06-07
+  count: 1
